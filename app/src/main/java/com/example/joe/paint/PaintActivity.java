@@ -3,8 +3,6 @@ package com.example.joe.paint;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -16,32 +14,22 @@ public class PaintActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        PalletteView palletteView = new PalletteView(this);
-        palletteView.setPadding(20,20,20,20);
-        for(int i = 0; i < 10; i++) {
-            PaintView paintView = new PaintView(this);
-            paintView.setColor(Color.DKGRAY);
-            palletteView.addView(paintView);
+        LinearLayout mainLayout = new LinearLayout(this);
+        mainLayout.setOrientation(LinearLayout.VERTICAL);
+        mainLayout.setBackgroundColor(Color.RED);
 
-            paintView.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v) {
-                    PaintView view = (PaintView)v;
-                    view.setColor(Color.RED);
-                }
-            });
+        PaintAreaView paintAreaView = new PaintAreaView(this);
+        mainLayout.addView(paintAreaView);
 
-            paintView.setOnSplotchTouchListener(new PaintView.OnSplotchTouchListener()
-            {
-                @Override
-                public void onSplotchTouch(PaintView v) {
-                    PaintView view = (PaintView)v;
-                    view.setColor(Color.GREEN);
-                }
-            });
-        }
-        setContentView(palletteView);
+        LinearLayout paletteLayout = new LinearLayout(this);
+        PaletteView paletteView = new PaletteView(this);
+        paletteView.setPadding(20, 20, 20, 20);
+
+        paletteLayout.addView(paletteView);
+        mainLayout.addView(paletteLayout);
+
+        setContentView(mainLayout);
+
     }
 
 }
